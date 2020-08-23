@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // useState a hook
+import React, { useState, useEffect } from 'react'; // useState a hook
 //import logo from './logo.svg';
 import './App.css';
 
@@ -28,7 +28,12 @@ function Todo({ todo, removeTodo, index, completeTodo }) { // destructing
       className="todo"
       onClick={() => completeTodo(index)}
     >
-      <div className="task">
+      <div
+        className="task"
+        style={{
+          textDecoration: todo.isComplete ? 'line-through' : ''
+        }}
+      >
         {todo.isComplete ? completeIcon : uncompleteIcon}
         {todo.text}
       </div>
@@ -79,7 +84,15 @@ function App() {
       </header>
     </div>
   );*/
-  const [todos, setTodos] = useState(INIT_TODOS);
+  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todos')) || INIT_TODOS);
+  // https://reactjs.org/docs/hooks-intro.html
+  useEffect(() => {
+    //console.log('todos change');
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+  // in console, can try type 'localStorage', `localStorage.clear()`
+  // localStorage.removeItem('todos')
+
   const addTodo = (text) => {
     const newTodos = [{ text }, ...todos];
     setTodos(newTodos);
