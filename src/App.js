@@ -63,6 +63,7 @@ function TodoForm({ addTodo }) {
         onChange={(e) => {setValue(e.target.value)}} />
     </form>
   );
+  // setValue is async op
 }
 
 function App() {
@@ -124,7 +125,8 @@ function App() {
               key={todo.text}
               todo={todo}
               removeTodo={removeTodo}
-              completeTodo={completeTodo} />
+              completeTodo={completeTodo}
+            />
           ))
         }
       </div>
